@@ -1,4 +1,4 @@
-let database = require("../database");
+let database = require("../models/userModel").database;
 
 let remindersController = {
   list: (req, res) => {
@@ -67,3 +67,33 @@ let remindersController = {
 };
 
 module.exports = remindersController;
+
+
+
+// create : async (res,req){
+//   let reminder = {
+//     id: database.cindy.reminders.length + 1,
+//     title: req.body.title,
+//     description: req.body.description,
+//     completed: false,
+//   };
+// }
+
+
+// //CASE 1 : User uploads image from computer 
+
+// if (res.file){
+//   reminder.cover = req.file.path;
+// }
+
+// //CASE 2 : USER CHECK THE RANDOM cover checkbox
+
+// if (req.body.randomCover === ture){
+//     fetch("http://api.unslash.com/photos/random")
+//       .then(response => response.json())
+//       .then(data => {
+//         reminder.cover = data.urls[0].full
+//       })
+// }
+
+// //CASE 3 : USER PASTE A URL

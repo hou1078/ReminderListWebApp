@@ -30,17 +30,26 @@ app.set("view engine", "ejs");
 app.use(
   session({
     secret: "secret",
-    resave: true,
+    resave: false,
     saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000,
+    },
   })
 );
-
 //Importing Passport and the Local Strategy
 const passport = require("./middleware/passport");
-const authroutes = require("./router/authrouter");
-const indexroutes = require("./router/indexRouter");
+const authRoute = require("./routes/authRoute");
+const indexRoute = require("./routes/indexRoute");
 
-
+// Middleware for express
+app.use(express.json());
+app.use(ejsLayouts);
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Defining various routes related to reminders
 app.get("/reminders", reminderController.list);
@@ -58,9 +67,14 @@ app.get("/login", authController.login);
 app.post("/register", authController.registerSubmit);
 app.post("/login", authController.loginSubmit);
 
+
+app.use("/", indexRoute);
+app.use("/auth", authRoute);
+
+
 //Starting the Express server and listening on port 3001
 app.listen(3001, function () {
   console.log(
-    "Server running. Visit: http://localhost:3001/reminders in your browser 🚀"
+    "Server running. Visit: http://localhost:3001/auth/login in your browser 🚀"
   );
 });

@@ -7,6 +7,7 @@ const router = express.Router();
 //GET route, for login only forwardAuthenticated is accepted.
 router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
 
+
 // POST route ,passport set, local can be replace by 'facebok' etc.
 router.post(
   "/login",
