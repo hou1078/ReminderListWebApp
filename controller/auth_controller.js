@@ -2,17 +2,21 @@ let database = require("../models/userModel").database;
 
 let authController = {
   login: (req, res) => {
-    res.render("auth/login");
+    res.render("login");
   },
-
+  
+  loginout: (req, res) => {
+    res.redirect("/login");
+  },
+  
   register: (req, res) => {
-    res.render("auth/register");
+    res.render("register");
   },
-
+  
   loginSubmit: (req, res) => {
-    res.redirect("/dashboard");
+    res.redirect("/login");
   },
-
+  
   registerSubmit: (req, res) => {
     let user = {
       id: database.users.length + 1,
@@ -24,5 +28,4 @@ let authController = {
     res.render("auth/login");
   },
 };
-
 module.exports = authController;

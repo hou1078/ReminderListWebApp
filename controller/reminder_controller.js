@@ -2,7 +2,7 @@ let database = require("../models/userModel").database;
 
 let remindersController = {
   list: (req, res) => {
-    res.render("reminder/index", { reminders: database.cindy.reminders });
+    res.render("reminder/index", { reminders: req.user.reminders });
   },
 
   new: (req, res) => {
@@ -23,12 +23,12 @@ let remindersController = {
 
   create: (req, res) => {
     let reminder = {
-      id: database.cindy.reminders.length + 1,
+      id: req.user.reminders.length + 1,
       title: req.body.title,
       description: req.body.description,
       completed: false,
     };
-    database.cindy.reminders.push(reminder);
+    req.user.reminders.push(reminder);
     res.redirect("/reminders");
   },
 

@@ -12,15 +12,15 @@ router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/auth/login",
+    successRedirect: "/reminders",
+    failureRedirect: "/login",
   })
 );
 
 // GET route, for logout.
 router.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/auth/login");
+  res.redirect("/login");
 });
 
 module.exports = router;

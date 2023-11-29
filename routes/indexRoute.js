@@ -6,8 +6,8 @@ router.get("/", (req, res) => {
   res.send("welcome");
 });
 
-router.get("/dashboard", ensureAuthenticated, (req, res) => {
-  res.render("dashboard", {
+router.get("/reminder", ensureAuthenticated, (req, res) => {
+  res.render("reminder", {
     user: req.user,
   });
 });
