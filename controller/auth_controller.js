@@ -10,11 +10,18 @@ let authController = {
   },
 
   loginSubmit: (req, res) => {
-    // implement later
+    res.redirect("/dashboard");
   },
 
   registerSubmit: (req, res) => {
-    // implement later
+    let user = {
+      id: database.users.length + 1,
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    };
+    database.users.push(user);
+    res.render("auth/login");
   },
 };
 
