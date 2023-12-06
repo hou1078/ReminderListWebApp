@@ -8,11 +8,10 @@ const path = require("path");
 const ejsLayouts = require("express-ejs-layouts");
 //handling user sessions
 const session = require("express-session");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 //handling reminders and user authentication (logic, functions)
 const reminderController = require("./controller/reminder_controller");
-const authController = require("./controller/auth_controller");
 
 //Serving static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public")));
@@ -67,7 +66,7 @@ app.use("/auth", authRoute);
 
 
 //Starting the Express server and listening on port 3001
-app.listen(3001, function () {
+app.listen(port, function () {
   console.log(
     "Server running. Visit: http://localhost:3001/auth/login in your browser 🚀"
   );

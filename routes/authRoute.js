@@ -56,11 +56,15 @@ router.get("/forgot", (req, res) => {
   res.render("forgot", {layout:'login_layout'});
 });
 
-// Logout route
 router.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/auth/login");
+  req.logout((err) => {
+    if (err) {
+      console.error(err);
+    }
+    res.redirect("/auth/login");
+  });
 });
+
 
 module.exports = router;
 
