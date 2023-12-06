@@ -5,22 +5,23 @@ const { forwardAuthenticated } = require("../middleware/checkAuth");
 const router = express.Router();
 
 //GET route, for login only forwardAuthenticated is accepted.
-router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
-
+router.get("/login", forwardAuthenticated, (req, res) => {
+  res.render("login", {layout:'login_layout'});
+});
 
 // POST route ,passport set, local can be replace by 'facebok' etc.
 router.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/reminders",
-    failureRedirect: "/login",
+    failureRedirect: "/auth/login",
   })
 );
 
 // GET route, for logout.
 router.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/login");
+  res.redirect("/auth/login");
 });
 
 module.exports = router;
