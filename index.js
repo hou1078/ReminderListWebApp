@@ -51,7 +51,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Defining various routes related to reminders
+// // Defining various routes related to reminders
 app.get("/reminders", reminderController.list);
 app.get("/reminder/new", reminderController.new);
 app.get("/reminder/:id", reminderController.listOne);
@@ -61,13 +61,7 @@ app.post("/reminder/", reminderController.create);
 app.post("/reminder/update/:id", reminderController.update);
 app.post("/reminder/delete/:id", reminderController.delete);
 
-//Defining routes related to user authentication
-app.get("/register", authController.register);
-app.get("/login", authController.login);
-app.post("/register", authController.registerSubmit);
-app.post("/login", authController.loginSubmit);
-
-
+// Defining various routes related to authentication
 app.use("/", indexRoute);
 app.use("/auth", authRoute);
 

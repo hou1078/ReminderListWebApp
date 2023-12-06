@@ -6,19 +6,15 @@ let remindersController = {
   },
 
   new: (req, res) => {
-    res.render("reminder/create");
+    res.render("reminder/create", { reminders: req.user.reminders });
   },
 
   listOne: (req, res) => {
     let reminderToFind = req.params.id;
-    let searchResult = database.cindy.reminders.find(function (reminder) {
+    let searchResult = req.user.reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
-    if (searchResult != undefined) {
-      res.render("reminder/single-reminder", { reminderItem: searchResult });
-    } else {
-      res.render("reminder/index", { reminders: database.cindy.reminders });
-    }
+    res.render("reminder/single-reminder", { reminderItem: searchResult });
   },
 
   create: (req, res) => {
@@ -34,15 +30,22 @@ let remindersController = {
 
   edit: (req, res) => {
     let reminderToFind = req.params.id;
-    let searchResult = database.cindy.reminders.find(function (reminder) {
+    let searchResult = req.user.reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
+  
+    if (!searchResult) {
+      res.status(404).send("Reminder not found");
+      return;
+    }
+  
     res.render("reminder/edit", { reminderItem: searchResult });
   },
+  
 
   update: (req, res) => {
     let reminderToFind = req.params.id;
-    let searchResult = database.cindy.reminders.find(function (reminder) {
+    let searchResult = req.user.reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
     searchResult.title = req.body.title;
@@ -57,11 +60,11 @@ let remindersController = {
 
   delete: (req, res) => {
     let reminderToFind = req.params.id;
-    let searchResult = database.cindy.reminders.find(function (reminder) {
+    let searchResult = req.user.reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
-    let index = database.cindy.reminders.indexOf(searchResult);
-    database.cindy.reminders.splice(index, 1);
+    let index = req.user.reminders.indexOf(searchResult);
+    req.user.reminders.splice(index, 1);
     res.redirect("/reminders");
   },
 };

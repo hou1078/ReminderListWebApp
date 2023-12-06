@@ -4,12 +4,45 @@ const { forwardAuthenticated } = require("../middleware/checkAuth");
 
 const router = express.Router();
 
-//GET route, for login only forwardAuthenticated is accepted.
+//localhost:3001/auth/login
 router.get("/login", forwardAuthenticated, (req, res) => {
   res.render("login", {layout:'login_layout'});
 });
 
-// POST route ,passport set, local can be replace by 'facebok' etc.
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/reminders",
+    failureRedirect: "/auth/login",
+  })
+);
+router.get("/register", forwardAuthenticated, (req, res) => {
+  res.render("register", {layout:'login_layout'});
+});
+
+// POST route, for registering a new user.
+router.post("/register", (req, res) => {
+  const { name, email, password, password2 } = req.body;
+
+  // Validation
+  if (!name || !email || !password || !password2) {
+    res.render("register", {
+      message: "Please enter all fields",
+      layout:'login_layout'
+    });
+  }
+
+  if (password !== password2) {
+    res.render("register", {
+      message: "Passwords do not match",
+      layout:'login_layout'
+    });
+  }
+
+  // Validation passed
+  res.redirect("/auth/login");
+});
+// POST route, for login.
 router.post(
   "/login",
   passport.authenticate("local", {
@@ -18,7 +51,12 @@ router.post(
   })
 );
 
-// GET route, for logout.
+// Forgot password route
+router.get("/forgot", (req, res) => {
+  res.render("forgot", {layout:'login_layout'});
+});
+
+// Logout route
 router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/auth/login");

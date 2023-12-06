@@ -5,10 +5,6 @@ let authController = {
     res.render("login");
   },
   
-  loginout: (req, res) => {
-    res.redirect("/login");
-  },
-  
   register: (req, res) => {
     res.render("register");
   },
