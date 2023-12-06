@@ -69,18 +69,18 @@ let remindersController = {
   },
 };
 
+//CASE 1 : User uploads image from computer
+
+
+
+// if (res.file){
+//   reminder.cover = req.file.path;
+
+
+// }
+
 module.exports = remindersController;
 
-
-
-// create : async (res,req){
-//   let reminder = {
-//     id: database.cindy.reminders.length + 1,
-//     title: req.body.title,
-//     description: req.body.description,
-//     completed: false,
-//   };
-// }
 
 
 // //CASE 1 : User uploads image from computer 
@@ -99,4 +99,3 @@ module.exports = remindersController;
 //       })
 // }
 
-// //CASE 3 : USER PASTE A URL

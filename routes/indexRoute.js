@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { ensureAuthenticated, isAdmin } = require("../middleware/checkAuth");
+const { ensureAuthenticated } = require("../middleware/checkAuth");
 
 //------Welcome Router---------///
 router.get("/", (req, res) => {
   res.send("welcome");
 });
-
 
 //-----------reminder dashboard------------//
 router.get("/reminders", ensureAuthenticated, (req, res) => {
@@ -14,5 +13,6 @@ router.get("/reminders", ensureAuthenticated, (req, res) => {
     user: req.user,
   });
 });
+
 
 module.exports = router;
