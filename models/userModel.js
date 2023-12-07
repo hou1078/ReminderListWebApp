@@ -4,22 +4,37 @@ const database = [
       name: "Jimmy Smith",
       email: "jimmy123@gmail.com",
       password: "jimmy123!",
-      reminders: []
+      reminders: [],
+      role: 'regular',
+      sessions: '123123'
     },
     {
       id: 2,
       name: "Johnny Doe",
       email: "johnny123@gmail.com",
       password: "johnny123!",
-      reminders: []
+      reminders: [],
+      role: 'regular',
+      sessions: '32132'
     },
     {
       id: 3,
       name: "Jonathan Chen",
       email: "jonathan123@gmail.com",
       password: "jonathan123!",
-      reminders: []
+      reminders: [],
+      role: 'regular',
+      sessions: '32323'
     },
+    {
+      id: 4,
+      name: "Admin",
+      email: "admin@gmail.com",
+      password: "admin123!",
+      reminders: [],
+      role: 'admin',
+      sessions: '44444'
+    }
   ];
   
   const userModel = {

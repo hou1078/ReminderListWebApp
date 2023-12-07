@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("../middleware/passport");
-const { forwardAuthenticated } = require("../middleware/checkAuth");
+const { forwardAuthenticated, } = require("../middleware/checkAuth");
+
 
 const router = express.Router();
 
@@ -8,6 +9,7 @@ const router = express.Router();
 router.get("/login", forwardAuthenticated, (req, res) => {
   res.render("login", {layout:'login_layout'});
 });
+
 
 router.post(
   "/login",
@@ -42,14 +44,22 @@ router.post("/register", (req, res) => {
   // Validation passed
   res.redirect("/auth/login");
 });
+
 // POST route, for login.
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/reminders",
     failureRedirect: "/auth/login",
+    successRedirect: (req, res) => {
+      if (req.user.role === 'regular') {
+        res.redirect('/reminders');
+      } else if (req.user.role === 'admin') {
+        res.redirect('/admin');
+      }
+    }
   })
 );
+
 
 // Forgot password route
 router.get("/forgot", (req, res) => {
