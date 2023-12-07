@@ -1,4 +1,19 @@
 let database = require("../models/userModel").database;
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/imgs');
+  },
+  filename: function (req, file, cb) {
+    let reminderId = req.body.id || Date.now();
+    let fileExt = path.extname(file.originalname);
+    cb(null, reminderId + fileExt);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 let remindersController = {
   list: (req, res) => {
@@ -17,15 +32,23 @@ let remindersController = {
     res.render("reminder/single-reminder", { reminderItem: searchResult });
   },
 
-  create: (req, res) => {
-    let reminder = {
-      id: req.user.reminders.length + 1,
-      title: req.body.title,
-      description: req.body.description,
-      completed: false,
-    };
-    req.user.reminders.push(reminder);
-    res.redirect("/reminders");
+  
+  create:(req, res) => {
+    upload.single('photo')(req, res, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      let reminder = {
+        cover: req.file ? req.file.path : null,
+        id: req.user.reminders.length + 1,
+        title: req.body.title,
+        description: req.body.description,
+        completed: false,
+      };
+      req.user.reminders.push(reminder);
+      res.redirect("/reminders");
+    })
   },
 
   edit: (req, res) => {
@@ -69,33 +92,9 @@ let remindersController = {
   },
 };
 
-//CASE 1 : User uploads image from computer
 
-
-
-// if (res.file){
-//   reminder.cover = req.file.path;
-
-
-// }
 
 module.exports = remindersController;
 
 
-
-// //CASE 1 : User uploads image from computer 
-
-// if (res.file){
-//   reminder.cover = req.file.path;
-// }
-
-// //CASE 2 : USER CHECK THE RANDOM cover checkbox
-
-// if (req.body.randomCover === ture){
-//     fetch("http://api.unslash.com/photos/random")
-//       .then(response => response.json())
-//       .then(data => {
-//         reminder.cover = data.urls[0].full
-//       })
-// }
 

@@ -1,5 +1,10 @@
 <div class="container">
-  <form action="/reminder" method="POST">
+  <form action="/reminder" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="<%= reminders.length + 1 %>">
+    <div class="form-group">
+      <label for="photo">Cover Photo</label>
+      <input type="file" class="form-control" id="photoInput" name="photo">
+    </div>
     <div class="form-group">
       <label for="title">Title</label>
       <input type="text" class="form-control" id="titleInput" placeholder="Title" name="title">

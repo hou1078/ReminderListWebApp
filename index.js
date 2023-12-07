@@ -10,11 +10,13 @@ const ejsLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const port = process.env.PORT || 3001;
 
+
 //handling reminders and user authentication (logic, functions)
 const reminderController = require("./controller/reminder_controller");
 
 //Serving static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public")));
+
 
 //Configuring Express
 app.use(express.urlencoded({ extended: false }));
@@ -43,6 +45,7 @@ const passport = require("./middleware/passport");
 const authRoute = require("./routes/authRoute");
 const indexRoute = require("./routes/indexRoute");
 
+
 // Middleware for express
 app.use(express.json());
 app.use(ejsLayouts);
@@ -59,6 +62,7 @@ app.post("/reminder/", reminderController.create);
 
 app.post("/reminder/update/:id", reminderController.update);
 app.post("/reminder/delete/:id", reminderController.delete);
+
 
 // Defining various routes related to authentication
 app.use("/", indexRoute);
